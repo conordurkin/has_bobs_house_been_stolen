@@ -1,0 +1,11 @@
+{
+  "status": "No",
+  "checked_at": "2026-08-01T20:04:00+00:00",
+  "total_records_on_file": 20,
+  "baseline_record_count": 20,
+  "new_records": [],
+  "source_search_url": "https://recorder.dupageco.org/Search.aspx",
+  "official_fraud_alert_signup": "https://www.propertyfraudalert.com/ILDupage",
+  "last_check_error": "Page.goto: net::ERR_ABORTED at https://recorder.dupageco.org/Search.aspx\nCall log:\n  - navigating to \"https://recorder.dupageco.org/Search.aspx\", waiting until \"domcontentloaded\"\n",
+  "last_check_attempted_at": "2026-08-01T20:21:32.843883+00:00"
+}

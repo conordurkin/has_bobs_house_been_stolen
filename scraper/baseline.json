@@ -1,0 +1,26 @@
+{
+  "established_on": "2026-08-01",
+  "note": "Document numbers confirmed on file as of the date above via DuPage County Recorder's public search (address + owner name search). Everything here is known, expected history (original purchase deed, routine mortgages/refinances/releases, one easement declaration). Anything found in a future check that is NOT in this list is treated as NEW and will flip the site to 'Yes'. If a new record shows up that turns out to be legitimate (e.g. a real refinance), add its document number here after confirming it manually.",
+  "known_document_numbers": [
+    "R2025-035249",
+    "R2013-093517",
+    "R2013-083601",
+    "R2012-006524",
+    "R2011-156687",
+    "R2010-148768",
+    "R2010-132476",
+    "R2010-131135",
+    "R2007-190751",
+    "R2004-090950",
+    "R2004-051789",
+    "R2003-108769",
+    "R2002-340686",
+    "R2000-041495",
+    "R1999-232331",
+    "R1999-232330",
+    "R1999-232329",
+    "R1996-021600",
+    "R1991-015104",
+    "R1983-060071"
+  ]
+}
