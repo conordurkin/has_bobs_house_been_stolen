@@ -26,9 +26,6 @@ jobs:
 
       - name: Run check
         env:
-          OWNER_LAST_NAME: ${{ secrets.OWNER_LAST_NAME }}
-          OWNER_FIRST_NAME_1: ${{ secrets.OWNER_FIRST_NAME_1 }}
-          OWNER_FIRST_NAME_2: ${{ secrets.OWNER_FIRST_NAME_2 }}
           PROPERTY_HOUSE_NUMBER: ${{ secrets.PROPERTY_HOUSE_NUMBER }}
           PROPERTY_STREET: ${{ secrets.PROPERTY_STREET }}
           PROPERTY_CITY: ${{ secrets.PROPERTY_CITY }}

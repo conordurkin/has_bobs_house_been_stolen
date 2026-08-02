@@ -1,18 +1,14 @@
 """
 Checks DuPage County Recorder of Deeds public records for anything filed
-against a specific property/owner that isn't already accounted for in
+against a specific property that isn't already accounted for in
 baseline.json, and writes the result to docs/data.json for the static
 frontend to read.
 
-Owner name and property address are read from environment variables
-(GitHub Actions secrets in CI) rather than hardcoded, so this file and
-baseline.json don't have to contain anyone's PII even though the repo
-is public.
+The property address is read from environment variables (GitHub Actions
+secrets in CI) rather than hardcoded, so this file and baseline.json
+don't have to contain anyone's PII even though the repo is public.
 
 Required env vars:
-  OWNER_LAST_NAME
-  OWNER_FIRST_NAME_1
-  OWNER_FIRST_NAME_2   (optional, e.g. a spouse)
   PROPERTY_HOUSE_NUMBER
   PROPERTY_STREET
   PROPERTY_CITY
@@ -40,9 +36,8 @@ BASELINE_SANITY_ANCHOR = "R1999-232329"
 
 
 def parse_results_table(page):
-    """Parses whatever DuPage recorder results grid is currently rendered.
-    Works for both the address-search and name-search result layouts:
-    both are 6 columns of [DocNumber, DateRecorded, ..., ..., DocType, LegalDescription].
+    """Parses the DuPage recorder address-search results grid: 6 columns of
+    [DocNumber, DateRecorded, Address, City, DocType, LegalDescription].
     """
     records = []
     rows = page.query_selector_all("#MainContent_gvData tr")
@@ -97,40 +92,18 @@ def run_address_search(page, house_number, street, city):
     return parse_results_table(page)
 
 
-def run_name_search(page, last_name, first_name):
-    goto_search_page(page)
-    page.fill("#MainContent_txtLastName", last_name)
-    page.fill("#MainContent_txtFirstName", first_name)
-    page.wait_for_timeout(500)
-    page.check("#MainContent_cbGrantor")
-    best_effort_networkidle(page)
-    page.wait_for_timeout(1000)
-    page.click("#MainContent_btnSearch")
-    best_effort_networkidle(page)
-    page.wait_for_timeout(1500)
-    return parse_results_table(page)
-
-
 def collect_all_records_once(config):
-    all_records = {}
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-
-        for rec in run_address_search(
+        records = run_address_search(
             page,
             config["house_number"],
             config["street"],
             config["city"],
-        ):
-            all_records[rec["doc_number"]] = rec
-
-        for first_name in config["owner_first_names"]:
-            for rec in run_name_search(page, config["owner_last_name"], first_name):
-                all_records.setdefault(rec["doc_number"], rec)
-
+        )
         browser.close()
-    return list(all_records.values())
+    return records
 
 
 def collect_all_records(config, attempts=3, backoff_seconds=20):
@@ -150,8 +123,6 @@ def load_config_from_env():
     missing = [
         var
         for var in (
-            "OWNER_LAST_NAME",
-            "OWNER_FIRST_NAME_1",
             "PROPERTY_HOUSE_NUMBER",
             "PROPERTY_STREET",
             "PROPERTY_CITY",
@@ -162,14 +133,7 @@ def load_config_from_env():
         print(f"Missing required environment variables: {missing}", file=sys.stderr)
         sys.exit(1)
 
-    owner_first_names = [os.environ["OWNER_FIRST_NAME_1"]]
-    second = os.environ.get("OWNER_FIRST_NAME_2")
-    if second:
-        owner_first_names.append(second)
-
     return {
-        "owner_last_name": os.environ["OWNER_LAST_NAME"],
-        "owner_first_names": owner_first_names,
         "house_number": os.environ["PROPERTY_HOUSE_NUMBER"],
         "street": os.environ["PROPERTY_STREET"],
         "city": os.environ["PROPERTY_CITY"],

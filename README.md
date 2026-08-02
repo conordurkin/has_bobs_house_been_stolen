@@ -18,9 +18,13 @@ replacement for it.
 ## How it works
 
 1. `scraper/check_records.py` uses Playwright to search the DuPage County
-   Recorder's public index (https://recorder.dupageco.org/Search.aspx) —
-   once by property address, once each by owner first/last name — and
-   collects every recorded document tied to either.
+   Recorder's public index (https://recorder.dupageco.org/Search.aspx) by
+   property address, and collects every recorded document tied to it.
+   (An earlier version also cross-checked by owner name, but that search
+   path required an extra checkbox interaction that occasionally raced
+   and silently returned zero results — dropped for reliability, since
+   address search alone already catches anything filed against the
+   property, which is what actually matters.)
 2. It compares what it finds against `scraper/baseline.json`, a list of
    document numbers that were already confirmed on file (and confirmed
    normal — the original purchase deed, routine mortgages/refinances,
@@ -42,18 +46,15 @@ quietly on the page.
 ## Privacy note
 
 GitHub Pages on a free plan requires a public repo. So that a public,
-memorably-named repo/domain doesn't broadcast Bob's exact name and address,
-those live only as GitHub Actions secrets (read at scrape time), never
-committed to the repo. `baseline.json` only contains document numbers/dates,
-which are already public county data. The frontend speaks generically
-("the property") rather than repeating the name/address.
+memorably-named repo/domain doesn't broadcast Bob's exact address, it lives
+only as GitHub Actions secrets (read at scrape time), never committed to
+the repo. `baseline.json` only contains document numbers/dates, which are
+already public county data. The frontend speaks generically ("the
+property") rather than repeating the address.
 
 ## Setup
 
 1. **Add repo secrets** (Settings → Secrets and variables → Actions):
-   - `OWNER_LAST_NAME`
-   - `OWNER_FIRST_NAME_1`
-   - `OWNER_FIRST_NAME_2` (optional — e.g. a spouse's first name)
    - `PROPERTY_HOUSE_NUMBER`
    - `PROPERTY_STREET`
    - `PROPERTY_CITY`
@@ -73,9 +74,6 @@ which are already public county data. The frontend speaks generically
 pip install -r scraper/requirements.txt
 playwright install chromium
 
-export OWNER_LAST_NAME=...
-export OWNER_FIRST_NAME_1=...
-export OWNER_FIRST_NAME_2=...   # optional
 export PROPERTY_HOUSE_NUMBER=...
 export PROPERTY_STREET=...
 export PROPERTY_CITY=...
