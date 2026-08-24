@@ -1,11 +1,10 @@
 {
   "status": "No",
-  "checked_at": "2026-08-22T13:27:02.010328+00:00",
+  "checked_at": "2026-08-24T13:45:32.290115+00:00",
   "total_records_on_file": 18,
   "baseline_record_count": 18,
   "new_records": [],
   "source_search_url": "https://recorder.dupageco.org/Search.aspx",
   "official_fraud_alert_signup": "https://www.propertyfraudalert.com/ILDupage",
-  "last_check_error": "Page.fill: Timeout 30000ms exceeded.\nCall log:\nwaiting for locator(\"#MainContent_txtHouseNumber\")\n",
-  "last_check_attempted_at": "2026-08-23T13:27:20.425403+00:00"
+  "last_check_error": null
 }
