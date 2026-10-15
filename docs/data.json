@@ -1,11 +1,10 @@
 {
   "status": "No",
-  "checked_at": "2026-10-13T19:42:12.083068+00:00",
+  "checked_at": "2026-10-15T17:33:06.884000+00:00",
   "total_records_on_file": 18,
   "baseline_record_count": 18,
   "new_records": [],
   "source_search_url": "https://recorder.dupageco.org/Search.aspx",
   "official_fraud_alert_signup": "https://www.propertyfraudalert.com/ILDupage",
-  "last_check_error": "Sanity check failed: baseline anchor record was not found in results. The site's markup may have changed, or the search returned no results.",
-  "last_check_attempted_at": "2026-10-14T17:44:09.584446+00:00"
+  "last_check_error": null
 }
