@@ -6,5 +6,6 @@
   "new_records": [],
   "source_search_url": "https://recorder.dupageco.org/Search.aspx",
   "official_fraud_alert_signup": "https://www.propertyfraudalert.com/ILDupage",
-  "last_check_error": null
+  "last_check_error": "Sanity check failed: baseline anchor record was not found in results. The site's markup may have changed, or the search returned no results.",
+  "last_check_attempted_at": "2026-10-21T17:49:08.443225+00:00"
 }
